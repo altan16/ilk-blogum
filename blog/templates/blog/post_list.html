@@ -30,7 +30,7 @@
 	
 		<div class="post" style="float:left;width:450pt">	
 			<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ forloop.counter }} - {{ post.baslik }}</a></h1>
-			<p>{{ post.yazi|linebreaks }}</p>
+			{{ post.yazi|linebreaks }}
 		</div>
 		<div >		
 		<table>
