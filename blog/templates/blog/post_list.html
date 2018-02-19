@@ -1,12 +1,78 @@
 {% extends 'blog/base.html' %}
+
+{% block head_css %}
+	.userstable {
+		position:relative;
+		color:#6B6B6B;
+		width:220pt;
+		background-color:#CAEBF2;
+		height:55pt;
+		margin-right:20pt;
+		float:right
+	}
+	.userlogin{
+		
+		color:#6B6B6B;	
+		width:220pt;
+			
+		
+	}
+	.userregister{		
+		color:#6B6B6B;	
+		width:220pt;
+		
+		
+	}
+	
+{% endblock %}
+
 {% block  content %}
 	{% for post in posts %}
-		<div class="post">
-			<div class="date">
-				{{ post.yayinlanma_tarihi }}
-			</div>
-			<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.baslik }}</a></h1>
+	
+		<div class="post" style="float:left;width:450pt">	
+			<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ forloop.counter }} - {{ post.baslik }}</a></h1>
 			<p>{{ post.yazi|linebreaks }}</p>
 		</div>
+		<div >		
+		<table>
+		<tr><th>Kullanıcı Adı : </th><th><font color="red">{{ post.yazar }}</font></tr>		
+		<tr><th>Yayınlanma Tarihi : </th><th><font color="red">{{ post.yayinlanma_tarihi }}</font></th></tr>
+		</table>		
+		</div>
+		
+		
 	{% endfor %}
+{% endblock %}
+{% block  aside %}
+	<div>	
+		<h2>Login</h2>
+		<div class="userlogin">
+		<form method="POST" action="/login">
+		<input type="text" placeholder="User Name" /><br>
+		<input type="password" placeholder="Password" /><br>
+		<input type="submit" value="Login" />
+		</form>
+		</div>
+	</div>
+	<div>	
+		<h2>Register</h2>
+		<div class="userregister">
+		<form method="POST" action="/register">
+		<input type="text" placeholder="Name" /><br>
+		<input type="text" placeholder="User Name" /><br>
+		<input type="email" placeholder="E-mail" /><br>
+		<input type="password" placeholder="Password" /><br>
+		<input type="submit" value="Log In" />
+		</form>
+		</div>
+	</div>
+	<h3 style="float:right;margin-right:10px" >For writing you must login.</h3>	
+	<div>	
+		<h2>Last Writers</h2>
+		<ul>
+		{% for kullanicilar in son_yazilanlar %}
+			<li>{{ kullanicilar.yazar }} - {{ kullanicilar.yayinlanma_tarihi }}</li>
+		{% endfor %}
+		</ul>
+	</div>
 {% endblock %}
